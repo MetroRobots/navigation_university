@@ -10,4 +10,4 @@ repositories:
   src/navigation_university:
     type: git
     url: https://github.com/MetroRobots/navigation_university.git
-    version: devel
+    version: main
