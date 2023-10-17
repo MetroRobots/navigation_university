@@ -1,0 +1,13 @@
+repositories:
+  src/metro_gazebo_plugins:
+    type: git
+    url: https://github.com/MetroRobots/metro_gazebo_plugins.git
+    version: workshop2023
+  src/metro_nav:
+    type: git
+    url: https://github.com/MetroRobots/metro_nav.git
+    version: main
+  src/navigation_university:
+    type: git
+    url: https://github.com/MetroRobots/navigation_university.git
+    version: devel
