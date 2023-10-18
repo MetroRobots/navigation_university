@@ -12,6 +12,6 @@ repositories:
     url: https://github.com/MetroRobots/navigation_university.git
     version: main
   src/urdf_launch:
-      type: git
-      url: https://github.com/ros/urdf_launch.git
-      version: main
+    type: git
+    url: https://github.com/ros/urdf_launch.git
+    version: main
