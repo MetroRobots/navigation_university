@@ -1,0 +1,32 @@
+planner_server:
+  ros__parameters:
+    planner_plugins: [GridBased]
+    GridBased:
+      plugin: nav2_navfn_planner/NavfnPlanner
+      allow_unknown: true
+    Smac2D:
+      plugin: nav2_smac_planner/SmacPlanner2D
+    SmacHybrid:
+      plugin: nav2_smac_planner/SmacPlannerHybrid
+    SmacLattice:
+      plugin: nav2_smac_planner/SmacPlannerLattice
+    Theta:
+      plugin: nav2_theta_star_planner/ThetaStarPlanner
+
+
+global_costmap:
+  global_costmap:
+    ros__parameters:
+      publish_frequency: 1.0
+      robot_base_frame: base_footprint
+      track_unknown_space: true
+      # track_unknown_space: false
+      transform_tolerance: 0.5
+      plugins: [static_layer]
+      # plugins: [static_layer, inflation_layer]
+      static_layer:
+        plugin: nav2_costmap_2d::StaticLayer
+      inflation_layer:
+        plugin: nav2_costmap_2d::InflationLayer
+        cost_scaling_factor: 3.0
+        inflation_radius: 0.7

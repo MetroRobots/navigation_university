@@ -1,0 +1,65 @@
+Panels:
+  - Class: rviz_common/Displays
+  - Class: rviz_common/Views
+  - Class: rviz_common/Time
+Visualization Manager:
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid
+      Value: true
+    - Class: rviz_default_plugins/Map
+      Name: Map
+      Topic:
+        Filter size: 10
+        Value: /global_costmap/costmap
+      Update Topic:
+        Value: /global_costmap/costmap_updates
+      Value: true
+    - Class: rviz_default_plugins/PoseWithCovariance
+      Covariance:
+        Value: false
+      Head Radius: 0.2
+      Name: Start Pose
+      Shaft Radius: 0.1
+      Topic:
+        Filter size: 10
+        Value: /initialpose
+      Value: true
+    - Class: rviz_default_plugins/Pose
+      Color: 0; 255; 0
+      Head Radius: 0.2
+      Name: Goal Pose
+      Shaft Radius: 0.1
+      Topic:
+        Filter size: 10
+        Value: /goal_pose
+      Value: true
+    - Class: rviz_default_plugins/Path
+      Color: 28; 113; 216
+      Line Style: Billboards
+      Line Width: 0.1
+      Name: Path
+      Topic:
+        Filter size: 10
+        Value: /plan
+      Value: true
+  Enabled: true
+  Global Options:
+    Fixed Frame: map
+  Tools:
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/SetInitialPose
+    - Class: rviz_default_plugins/SetGoal
+  Value: true
+  Views:
+    Current:
+      Class: rviz_default_plugins/TopDownOrtho
+      Name: Current View
+      Scale: 20
+      X: 30
+      Y: 30
+Window Geometry:
+  Height: 995
+  Width: 1920
+  X: 0
+  Y: 24

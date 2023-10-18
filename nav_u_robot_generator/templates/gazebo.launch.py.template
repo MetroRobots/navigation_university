@@ -1,0 +1,49 @@
+from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument
+from launch.actions import IncludeLaunchDescription
+from launch.conditions import IfCondition
+from launch.substitutions import LaunchConfiguration
+from launch_ros.actions import Node
+from launch_ros.substitutions import FindPackageShare
+
+
+def generate_launch_description():
+    # these are the arguments you can pass this launch file, for example paused:=true
+    gui_arg = DeclareLaunchArgument(
+        name='gui',
+        default_value='true',
+    )
+    world_launch = IncludeLaunchDescription(
+        [FindPackageShare('gazebo_ros'), '/launch/gzserver.launch.py'],
+        launch_arguments={
+            'pause': 'true',
+            'verbose': 'true',
+            'world': [FindPackageShare('university_world'), '/worlds/a.world'],
+        }.items(),
+    )
+
+    gzclient_launch = IncludeLaunchDescription(
+        [FindPackageShare('gazebo_ros'), '/launch/gzclient.launch.py'],
+        condition=IfCondition(LaunchConfiguration('gui'))
+    )
+
+    description_launch_py = IncludeLaunchDescription(
+        [FindPackageShare('[PACKAGE_NAME]'), '/launch/description.launch.py'],
+    )
+
+    # push robot_description to factory and spawn robot in gazebo
+    urdf_spawner_node = Node(
+        package='gazebo_ros',
+        executable='spawn_entity.py',
+        name='urdf_spawner',
+        arguments=['-topic', '/robot_description', '-entity', '[ROBOT_NAME]', '-unpause'],
+        output='screen',
+    )
+
+    return LaunchDescription([
+        gui_arg,
+        world_launch,
+        gzclient_launch,
+        description_launch_py,
+        urdf_spawner_node,
+    ])

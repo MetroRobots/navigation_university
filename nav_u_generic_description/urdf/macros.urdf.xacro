@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="nav_u">
+  <material name="Grey">
+    <color rgba=".3 .3 .3 1" />
+  </material>
+  <material name="DarkGrey">
+    <color rgba=".175 .175 .175 1" />
+  </material>
+  <material name="White">
+    <color rgba="1 1 1 1" />
+  </material>
+  <material name="FlatBlack">
+    <color rgba="0.1 0.1 0.1 1" />
+  </material>
+  <material name="Black">
+    <color rgba="0 0 0 1" />
+  </material>
+  <material name="Red">
+    <color rgba="1 0 0 1" />
+  </material>
+  <material name="RedBright">
+    <color rgba="0.87 0.26 0.07 1" />
+  </material>
+  <material name="Green">
+    <color rgba="0 1 0 1" />
+  </material>
+  <material name="Blue">
+    <color rgba="0 0 1 1" />
+  </material>
+  <material name="SkyBlue">
+    <color rgba="0.13 0.44 0.70 1" />
+  </material>
+  <material name="Yellow">
+    <color rgba="1 1 0 1" />
+  </material>
+  <material name="ZincYellow">
+    <color rgba="0.9725 0.9529 0.2078 1" />
+  </material>
+  <material name="DarkYellow">
+    <color rgba="0.7 0.7 0 1" />
+  </material>
+  <material name="Purple">
+    <color rgba="1 0 1 1" />
+  </material>
+  <material name="Turquoise">
+    <color rgba="0 1 1 1" />
+  </material>
+  <material name="Orange">
+    <color rgba="1 0.5088 0.0468 1" />
+  </material>
+  <material name="Indigo">
+    <color rgba="0.33 0.0 0.5 1" />
+  </material>
+  <material name="Gold">
+    <color rgba="0.400000 0.248690 0.020759 1" />
+  </material>
+  <xacro:macro name="sensor" params="dx dy:=0 dz parent:=base_link samples angular_range rate:=12.0 min_dist:=0.12 max_dist:=15.0 stddev:=0.01 type:=sensor_msgs/PointCloud2">
+    <link name="sensor">
+      <visual>
+        <geometry>
+          <cylinder radius="0.025" length="0.03" />
+        </geometry>
+        <material name="DarkGrey" />
+      </visual>
+      <collision>
+        <geometry>
+          <cylinder radius="0.025" length="0.03" />
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="0.1" />
+        <inertia ixx="1e-3" ixy="0.0" ixz="0.0" iyy="1e-3" iyz="0.0" izz="1e-3" />
+      </inertial>
+    </link>
+    <joint name="sensor_joint" type="fixed">
+      <parent link="${parent}" />
+      <child link="sensor" />
+      <origin xyz="${dx} ${dy} ${dz + 0.015}" />
+    </joint>
+    <gazebo reference="sensor">
+      <sensor name="gazebo_lidar" type="ray">
+        <update_rate>${rate}</update_rate>
+        <plugin name="gazebo_lidar" filename="libgazebo_ros_ray_sensor.so">
+          <ros>
+            <argument>~/out:=scan</argument>
+            <namespace />
+          </ros>
+          <output_type>${type}</output_type>
+          <frame_name>sensor</frame_name>
+        </plugin>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>${samples}</samples>
+              <resolution>1</resolution>
+              <min_angle>${-angular_range/2}</min_angle>
+              <max_angle>${angular_range/2}</max_angle>
+            </horizontal>
+          </scan>
+          <range>
+            <min>${min_dist}</min>
+            <max>${max_dist}</max>
+            <resolution>0.015</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>${stddev}</stddev>
+          </noise>
+        </ray>
+      </sensor>
+      <material>Gazebo/DarkGrey</material>
+    </gazebo>
+  </xacro:macro>
+  <xacro:macro name="plugins" params="x_covar y_covar theta_covar odom_mult">
+    <gazebo>
+      <plugin name="gazebo_ros_state" filename="libgazebo_ros_state.so">
+        <ros>
+          <namespace>/robot</namespace>
+          <update_rate>5.0</update_rate>
+        </ros>
+      </plugin>
+      <plugin name="planar" filename="libgazebo_base2d_plugin.so">
+        <ros>
+          <covariance_x>${x_covar}</covariance_x>
+          <covariance_y>${y_covar}</covariance_y>
+          <covariance_theta>${theta_covar}</covariance_theta>
+          <odom_covariance_x>${x_covar*odom_mult}</odom_covariance_x>
+          <odom_covariance_y>${y_covar*odom_mult}</odom_covariance_y>
+          <odom_covariance_theta>${theta_covar*odom_mult}</odom_covariance_theta>
+        </ros>
+      </plugin>
+    </gazebo>
+  </xacro:macro>
+  <xacro:macro name="wheel" params="prefix radius width dx dy dz=0.0 reflect:=1 parent:=base_link color:=Black">
+    <link name="${prefix}_wheel">
+      <visual>
+        <origin xyz="0 ${reflect*width/2} 0" rpy="${pi/2} 0 0" />
+        <geometry>
+          <cylinder radius="${radius}" length="${width}" />
+        </geometry>
+        <material name="${color}" />
+      </visual>
+      <collision>
+        <origin xyz="0 ${reflect*width/2} 0" rpy="${pi/2} 0 0" />
+        <geometry>
+          <cylinder radius="${radius}" length="${width}" />
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="1" />
+        <inertia ixx="1e-3" ixy="0.0" ixz="0.0" iyy="1e-3" iyz="0.0" izz="1e-3" />
+      </inertial>
+    </link>
+    <joint name="${prefix}_wheel_joint" type="continuous">
+      <axis xyz="0 1 0" rpy="0 0 0" />
+      <parent link="${parent}" />
+      <child link="${prefix}_wheel" />
+      <origin xyz="${dx} ${reflect*(dy + 0.01)} ${dz}" />
+    </joint>
+    <gazebo reference="${prefix}_wheel">
+      <mu1 value="0.0" />
+      <mu2 value="0.0" />
+      <kp value="10000000.0" />
+      <kd value="1.0" />
+      <material>Gazebo/${color}</material>
+    </gazebo>
+  </xacro:macro>
+  <xacro:macro name="box_robot" params="length width height wheel_radius wheel_width:=0.05 color wheel_color:=Black ">
+    <link name="base_footprint" />
+    <joint name="foot_to_base_joint" type="fixed">
+      <parent link="base_footprint" />
+      <child link="base_link" />
+      <origin xyz="0 0 ${wheel_radius}" />
+    </joint>
+    <link name="base_link">
+      <visual>
+        <geometry>
+          <box size="${length} ${width} ${height}" />
+        </geometry>
+        <origin xyz="0 0 ${height/2}" />
+        <material name="${color}" />
+      </visual>
+      <collision>
+        <geometry>
+          <box size="${length} ${width} ${height}" />
+        </geometry>
+        <origin xyz="0 0 ${height/2}" />
+      </collision>
+      <inertial>
+        <mass value="10.0" />
+        <inertia ixx="0.12" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.5" />
+      </inertial>
+    </link>
+    <gazebo reference="base_link">
+      <mu1 value="0.0" />
+      <mu2 value="0.0" />
+      <kp value="10000000.0" />
+      <kd value="1.0" />
+      <material>Gazebo/${color}</material>
+    </gazebo>
+    <xacro:wheel prefix="left_front" dx="${length/4}" dy="${width/2}" radius="${wheel_radius}" width="${wheel_width}" color="${wheel_color}"/>
+    <xacro:wheel prefix="right_front" dx="${length/4}" dy="${width/2}" radius="${wheel_radius}" width="${wheel_width}" reflect="-1" color="${wheel_color}"/>
+    <xacro:wheel prefix="left_back" dx="-${length/4}" dy="${width/2}" radius="${wheel_radius}" width="${wheel_width}" color="${wheel_color}"/>
+    <xacro:wheel prefix="right_back" dx="-${length/4}" dy="${width/2}" radius="${wheel_radius}" width="${wheel_width}" reflect="-1" color="${wheel_color}"/>
+    <gazebo>
+      <plugin name="gazebo_ros_joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
+        <ros>
+          <namespace>/</namespace>
+        </ros>
+        <update_rate>10</update_rate>
+        <joint_name>left_front_wheel_joint</joint_name>
+        <joint_name>right_front_wheel_joint</joint_name>
+        <joint_name>right_back_wheel_joint</joint_name>
+        <joint_name>left_back_wheel_joint</joint_name>
+      </plugin>
+    </gazebo>
+  </xacro:macro>
+  <xacro:macro name="circle_robot" params="width height wheel_radius wheel_width:=0.05 color wheel_color:=Orange">
+    <link name="base_footprint" />
+    <joint name="foot_to_base_joint" type="fixed">
+      <parent link="base_footprint" />
+      <child link="base_link" />
+      <origin xyz="0 0 ${wheel_radius}" />
+    </joint>
+    <link name="base_link">
+      <visual>
+        <geometry>
+          <cylinder length="${height}" radius="${width / 2}" />
+        </geometry>
+        <origin xyz="0 0 ${height / 2}"/>
+        <material name="${color}" />
+      </visual>
+      <collision>
+        <geometry>
+          <cylinder length="${height}" radius="${width / 2}" />
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="10.0" />
+        <inertia ixx="0.12" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.5" />
+      </inertial>
+    </link>
+    <gazebo reference="base_link">
+      <mu1 value="0.0" />
+      <mu2 value="0.0" />
+      <kp value="10000000.0" />
+      <kd value="1.0" />
+      <material>Gazebo/${color}</material>
+    </gazebo>
+    <xacro:wheel prefix="left_front" dx="${.707 * width / 4}" dy="${.707 * width/4}" radius="${wheel_radius}" width="${wheel_width}" color="${wheel_color}"/>
+    <xacro:wheel prefix="right_front" dx="${.707 * width / 4}" dy="${.707 * width/4}" radius="${wheel_radius}" width="${wheel_width}" reflect="-1" color="${wheel_color}"/>
+    <xacro:wheel prefix="back" dx="${-0.5*width / 2}" dy="0.0" radius="${wheel_radius}" width="${wheel_width}" color="${wheel_color}"/>
+    <gazebo>
+      <plugin name="gazebo_ros_joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
+        <ros>
+          <namespace>/</namespace>
+        </ros>
+        <update_rate>10</update_rate>
+        <joint_name>left_front_wheel_joint</joint_name>
+        <joint_name>right_front_wheel_joint</joint_name>
+        <joint_name>back_wheel_joint</joint_name>
+      </plugin>
+    </gazebo>
+  </xacro:macro>
+</robot>

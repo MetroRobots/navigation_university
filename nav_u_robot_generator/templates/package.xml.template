@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>[PACKAGE_NAME]</name>
+  <version>0.1.0</version>
+  <description>
+     An automatically generated robot description package for [ROBOT_NAME]
+  </description>
+  <maintainer email="[AUTHOR_EMAIL]">[AUTHOR_NAME]</maintainer>
+
+  <license>BSD-3-Clause</license>
+
+  <author email="[AUTHOR_EMAIL]">[AUTHOR_NAME]</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>base2d_kinematics</depend>
+  <depend>gazebo_ros</depend>
+  <depend>nav_u_generic_description</depend>
+  <depend>nav_u_robot_generator</depend>
+  <depend>rviz2</depend>
+  <depend>rviz_common</depend>
+  <depend>rviz_default_plugins</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

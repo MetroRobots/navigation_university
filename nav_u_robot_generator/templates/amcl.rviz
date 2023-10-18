@@ -1,0 +1,87 @@
+Panels:
+  - Class: rviz_common/Displays
+    Help Height: 70
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /Map1/Topic1
+        - /ParticleCloud1/Topic1
+    Tree Height: 552
+  - Class: rviz_common/Views
+    Expanded:
+      - /Current View1
+    Name: Views
+Visualization Manager:
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid
+      Value: true
+    - Binary representation: false
+      Binary threshold: 100
+      Class: rviz_default_plugins/Map
+      Name: Map
+      Topic:
+        Durability Policy: Transient Local
+        Filter size: 10
+        Value: /map
+      Update Topic:
+        Value: /map_updates
+      Value: true
+    - Class: rviz_default_plugins/PoseWithCovariance
+      Name: PoseWithCovariance
+      Topic:
+        Filter size: 10
+        Value: /amcl_pose
+      Value: true
+    - Class: rviz_default_plugins/LaserScan
+      Color: 0; 255; 0
+      Color Transformer: FlatColor
+      Max Intensity: 0
+      Name: LaserScan
+      Position Transformer: XYZ
+      Size (m): 0.05000000074505806
+      Topic:
+        Filter size: 10
+        Value: /scan
+      Value: true
+    - Class: rviz_default_plugins/TF
+      Name: TF
+      Value: true
+    - Alpha: 1
+      Class: nav2_rviz_plugins/ParticleCloud
+      Color: 255; 25; 0
+      Max Arrow Length: 0.30000001192092896
+      Min Arrow Length: 0.019999999552965164
+      Name: ParticleCloud
+      Shape: Arrow (Flat)
+      Topic:
+        Filter size: 10
+        Reliability Policy: Best Effort
+        Value: /particle_cloud
+      Value: true
+  Enabled: true
+  Global Options:
+    Fixed Frame: map
+  Tools:
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/SetInitialPose
+      Covariance x: 0.25
+      Covariance y: 0.25
+      Covariance yaw: 0.06853891909122467
+      Topic:
+        Value: initialpose
+    - Class: rviz_default_plugins/SetGoal
+      Topic:
+        Value: goal_pose
+  Value: true
+  Views:
+    Current:
+      Class: rviz_default_plugins/TopDownOrtho
+      Name: Current View
+      Scale: 55.19443130493164
+Window Geometry:
+  Height: 995
+  QMainWindow State: 000000ff00000000fd0000000100000000000001cb00000389fc0200000002fb000000100044006900730070006c006100790073010000003d000002ab000000c900fffffffb0000000a0056006900650077007301000002ee000000d8000000a400ffffff000005af0000038900000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  Width: 1920
+  X: 0
+  Y: 24

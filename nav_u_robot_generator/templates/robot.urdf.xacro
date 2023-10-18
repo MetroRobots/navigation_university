@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<robot name="[ROBOT_NAME]" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find nav_u_generic_description)/urdf/macros.urdf.xacro" />
+
+  <xacro:[SHAPE_MACRO] width="[WIDTH]" height="[HEIGHT]" wheel_radius="[WHEEL_RADIUS]" color="[BODY_COLOR]" wheel_color="[WHEEL_COLOR]"/>
+  <xacro:sensor dx="[SENSOR_OFFSET]" dz="[HEIGHT]" samples="[SENSOR_SAMPLES]" angular_range="${[SENSOR_RANGE] * pi / 180}" stddev="[SENSOR_NOISE]" type="sensor_msgs/[SENSOR_TYPE]" />
+  <xacro:plugins x_covar="0.000004" y_covar="${0.000004*0.5}" theta_covar="${0.2 * 0.000004}" odom_mult="1.18" />
+</robot>

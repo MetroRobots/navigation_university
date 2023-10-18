@@ -1,0 +1,5 @@
+kinematics_publisher:
+  ros__parameters:
+    min_vel_x: 0.0
+    max_vel_x: [MAX_VEL_X]
+    max_vel_theta: [MAX_VEL_THETA]

@@ -1,0 +1,26 @@
+from launch import LaunchDescription
+from launch.actions import IncludeLaunchDescription
+from launch.substitutions import PathJoinSubstitution
+from launch_ros.actions import Node
+from launch_ros.substitutions import FindPackageShare
+
+
+def generate_launch_description():
+    ld = LaunchDescription()
+
+    ld.add_action(IncludeLaunchDescription(
+        PathJoinSubstitution([FindPackageShare('urdf_launch'), 'launch', 'description.launch.py']),
+        launch_arguments={
+            'urdf_package': '[PACKAGE_NAME]',
+            'urdf_package_path': PathJoinSubstitution(['urdf', 'robot.urdf.xacro'])}.items()
+    ))
+
+    ld.add_action(Node(
+        package='base2d_kinematics',
+        executable='kinematics_publisher',
+        parameters=[
+            [FindPackageShare('[PACKAGE_NAME]'), '/config/kinematics.yaml']
+        ],
+    ))
+
+    return ld
