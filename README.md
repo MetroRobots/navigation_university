@@ -33,3 +33,5 @@ Presentations for the Navigation University workshop.
  2. [01 - Teleoperation](https://docs.google.com/presentation/d/1n13MWDcnPihA-IBY9qn0Eyqg2voVTSz69Dk_iipQsgU/edit?usp=sharing)
  3. [02 - Mapping](https://docs.google.com/presentation/d/1ZiZhw7uswBVzEkDrTCOjHh_HMbA6Duw5_YbPt8leqtY/edit?usp=sharing)
  4. [03 - Global Planning](https://docs.google.com/presentation/d/1P86WW4Zh_Xr57MBmwCfGA0vgjo_maeoSe70MJrYjXWM/edit?usp=sharing)
+ 5. [04 - Localization](https://docs.google.com/presentation/d/18TA7NGiPHXQrzqErOisxQS8GZxMOid9798djV9Hf7fk/edit?usp=sharing)
+ 6. [05 - Costmaps](https://docs.google.com/presentation/d/1sxIqtTtSlSyvCpn6x0fwloD2D-W_K8swfpHEGsYEBLk/edit?usp=sharing)
