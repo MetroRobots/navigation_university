@@ -13,7 +13,7 @@ Visualization Manager:
         Filter size: 10
         Value: /global_costmap/costmap
       Update Topic:
-        Value: /global_costmap/costmap_updates
+        Value: /
       Value: true
     - Class: rviz_default_plugins/PoseWithCovariance
       Covariance:
