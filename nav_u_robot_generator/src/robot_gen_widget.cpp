@@ -453,7 +453,7 @@ void RobotGenWidget::generate()
 
   std::filesystem::path package2 = parent_path / config_package_name_;
 
-  renderTemplate(templates / "package2.xml.template", variables, package2 / "package.xml.template");
+  renderTemplate(templates / "package2.xml.template", variables, package2 / "package.xml");
   renderTemplate(templates / "CMakeLists2.txt", variables, package2 / "CMakeLists.txt");
   renderTemplate(templates / "amcl.rviz", variables, package2 / "config" / "amcl.rviz", false);
   renderTemplate(templates / "amcl.yaml", variables, package2 / "config" / "amcl.yaml", false);
