@@ -100,6 +100,43 @@ protected:
   void initializeValue(QSpinBox* widget, const std::string& param_name, int default_value);
   void initializeValue(QDoubleSlider* widget, const std::string& param_name, double default_value);
 
+
+
+  double get_parameter_or(const std::string& name, double dv)
+  {
+      if (node_->has_parameter(name))
+      {
+          return node_->get_parameter(name).as_double();
+      }
+      else
+      { return dv;
+      }
+  }
+
+
+    int get_parameter_or(const std::string& name, int dv)
+    {
+        if (node_->has_parameter(name))
+        {
+            return node_->get_parameter(name).as_int();
+        }
+        else
+        { return dv;
+        }
+    }
+
+
+      std::string get_parameter_or(const std::string& name, std::string dv)
+      {
+          if (node_->has_parameter(name))
+          {
+              return node_->get_parameter(name).as_string();
+          }
+          else
+          { return dv;
+          }
+      }
+
   std::vector<TemplateVariable> getVariables();
   void generateURDF();
   QHBoxLayout* addRow(const std::string& text, QWidget* widget);

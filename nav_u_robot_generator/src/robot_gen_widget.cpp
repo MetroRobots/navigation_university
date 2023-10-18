@@ -271,29 +271,29 @@ void RobotGenWidget::initialize(const rclcpp::Node::SharedPtr& parent_node, QWid
 
 void RobotGenWidget::initializeValue(QLineEdit* widget, const std::string& param_name, const std::string& default_value)
 {
-  std::string value = node_->get_parameter_or(param_name, default_value);
+  std::string value = get_parameter_or(param_name, default_value);
   widget->setText(value.c_str());
 }
 void RobotGenWidget::initializeValue(QComboBox* widget, const std::string& param_name, const std::string& default_value)
 {
-  std::string value = node_->get_parameter_or(param_name, default_value);
+  std::string value = get_parameter_or(param_name, default_value);
   int my_index = widget->findText(value.c_str());
   if (my_index >= 0)
     widget->setCurrentIndex(my_index);
 }
 void RobotGenWidget::initializeValue(QDoubleSpinBox* widget, const std::string& param_name, double default_value)
 {
-  double value = node_->get_parameter_or(param_name, default_value);
+  double value = get_parameter_or(param_name, default_value);
   widget->setValue(value);
 }
 void RobotGenWidget::initializeValue(QSpinBox* widget, const std::string& param_name, int default_value)
 {
-  int value = node_->get_parameter_or(param_name, default_value);
+  int value = get_parameter_or(param_name, default_value);
   widget->setValue(value);
 }
 void RobotGenWidget::initializeValue(QDoubleSlider* widget, const std::string& param_name, double default_value)
 {
-  double value = node_->get_parameter_or(param_name, default_value);
+  double value = get_parameter_or(param_name, default_value);
   widget->setDoubleValue(value);
 }
 
