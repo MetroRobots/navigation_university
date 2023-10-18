@@ -54,7 +54,7 @@
   <material name="Gold">
     <color rgba="0.400000 0.248690 0.020759 1" />
   </material>
-  <xacro:macro name="sensor" params="dx dy:=0 dz parent:=base_link samples angular_range rate:=12.0 min_dist:=0.12 max_dist:=15.0 stddev:=0.01 type:=sensor_msgs/PointCloud2">
+  <xacro:macro name="lazor" params="dx dy:=0 dz parent:=base_link samples angular_range rate:=12.0 min_dist:=0.12 max_dist:=15.0 stddev:=0.01 type:=sensor_msgs/PointCloud2">
     <link name="sensor">
       <visual>
         <geometry>
