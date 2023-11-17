@@ -35,3 +35,5 @@ Presentations for the Navigation University workshop.
  4. [03 - Global Planning](https://docs.google.com/presentation/d/1P86WW4Zh_Xr57MBmwCfGA0vgjo_maeoSe70MJrYjXWM/edit?usp=sharing)
  5. [04 - Localization](https://docs.google.com/presentation/d/18TA7NGiPHXQrzqErOisxQS8GZxMOid9798djV9Hf7fk/edit?usp=sharing)
  6. [05 - Costmaps](https://docs.google.com/presentation/d/1sxIqtTtSlSyvCpn6x0fwloD2D-W_K8swfpHEGsYEBLk/edit?usp=sharing)
+ 7. [06 - Local Planning](https://docs.google.com/presentation/d/1kXSle8oyF-ooqYNL298knn994adwgV2_cCK4lpZnGho/edit?usp=sharing)
+ 8. [07 - High Level Coordination](https://docs.google.com/presentation/d/1txxOIOTduF_LYAMh2NWUG2syBrtXM6LIyLhOILcFwIs/edit?usp=sharing)
