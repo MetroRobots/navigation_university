@@ -12,6 +12,7 @@ repos:
   - id: check-symlinks
   - id: check-case-conflict
   - id: check-xml
+    exclude: nav_u_robot_generator/templates/robot.urdf.xacro
   - id: check-yaml
   - id: check-ast
   - id: double-quote-string-fixer
@@ -58,5 +59,11 @@ repos:
   hooks:
   - id: clang-format
   rev: v18.1.8
+- repo: https://github.com/tier4/pre-commit-hooks-ros
+  hooks:
+  - id: prettier-package-xml
+  - id: prettier-xacro
+    exclude: nav_u_robot_generator/templates/robot.urdf
+  rev: v0.7.0
 ci:
   autoupdate_schedule: quarterly
