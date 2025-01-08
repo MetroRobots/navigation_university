@@ -17,7 +17,7 @@ repos:
   - id: check-ast
   - id: double-quote-string-fixer
   - id: requirements-txt-fixer
-  rev: v4.6.0
+  rev: v5.0.0
 - repo: https://github.com/codespell-project/codespell
   hooks:
   - id: codespell
@@ -54,16 +54,16 @@ repos:
 - repo: https://github.com/PyCQA/flake8
   hooks:
   - id: flake8
-  rev: 7.1.0
+  rev: 7.1.1
 - repo: https://github.com/pre-commit/mirrors-clang-format
   hooks:
   - id: clang-format
-  rev: v18.1.8
+  rev: v19.1.6
 - repo: https://github.com/tier4/pre-commit-hooks-ros
   hooks:
   - id: prettier-package-xml
   - id: prettier-xacro
     exclude: nav_u_robot_generator/templates/robot.urdf
-  rev: v0.7.0
+  rev: v0.10.0
 ci:
   autoupdate_schedule: quarterly
