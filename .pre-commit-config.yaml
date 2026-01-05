@@ -17,13 +17,13 @@ repos:
   - id: check-ast
   - id: double-quote-string-fixer
   - id: requirements-txt-fixer
-  rev: v5.0.0
+  rev: v6.0.0
 - repo: https://github.com/codespell-project/codespell
   hooks:
   - id: codespell
     args:
     - --write-changes
-  rev: v2.3.0
+  rev: v2.4.1
 - repo: https://github.com/adrienverge/yamllint
   hooks:
   - id: yamllint
@@ -31,7 +31,7 @@ repos:
     - --format
     - parsable
     - --strict
-  rev: v1.35.1
+  rev: v1.37.1
 - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
   hooks:
   - id: yamlfmt
@@ -50,15 +50,15 @@ repos:
 - repo: https://github.com/hhatto/autopep8
   hooks:
   - id: autopep8
-  rev: v2.3.1
+  rev: v2.3.2
 - repo: https://github.com/PyCQA/flake8
   hooks:
   - id: flake8
-  rev: 7.1.1
+  rev: 7.3.0
 - repo: https://github.com/pre-commit/mirrors-clang-format
   hooks:
   - id: clang-format
-  rev: v19.1.6
+  rev: v21.1.8
 - repo: https://github.com/tier4/pre-commit-hooks-ros
   hooks:
   - id: prettier-package-xml
