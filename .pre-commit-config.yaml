@@ -58,7 +58,7 @@ repos:
 - repo: https://github.com/pre-commit/mirrors-clang-format
   hooks:
   - id: clang-format
-  rev: v22.1.2
+  rev: v22.1.5
 - repo: https://github.com/tier4/pre-commit-hooks-ros
   hooks:
   - id: prettier-package-xml
