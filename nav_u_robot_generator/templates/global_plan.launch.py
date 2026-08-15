@@ -13,7 +13,7 @@ def generate_launch_description():
     ld.add_action(DeclareLaunchArgument(
         'map_yaml',
         default_value=PathJoinSubstitution(
-            [FindPackageShare('university_world'), 'maps', 'willow-2010-02-18-0.10.yaml'])))
+            [FindPackageShare('university_world'), 'maps', 'u_world.yaml'])))
 
     ld.add_action(Node(
         package='nav2_planner',
@@ -35,6 +35,7 @@ def generate_launch_description():
         package='metro_nav_demo_utils',
         executable='global_planner',
         output='screen',
+        parameters=[{'child_frame_id': 'base_footprint'}]
     ))
 
     ld.add_action(Node(
@@ -42,7 +43,7 @@ def generate_launch_description():
         executable='lifecycle_manager',
         output='screen',
         parameters=[{'autostart': True},
-                    {'node_names': ['planner_server', 'map_server']}]))
+                    {'node_names': ['map_server', 'planner_server']}]))
 
     ld.add_action(Node(
         package='rviz2',

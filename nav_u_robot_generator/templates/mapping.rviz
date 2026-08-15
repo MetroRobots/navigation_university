@@ -57,6 +57,13 @@ Visualization Manager:
       Update Topic:
         Value: /map_updates
       Value: true
+    - Class: rviz_default_plugins/Axes
+      Enabled: true
+      Length: 1
+      Name: Axes
+      Radius: 0.1
+      Reference Frame: base_link
+      Value: true
   Enabled: true
   Global Options:
     Fixed Frame: map

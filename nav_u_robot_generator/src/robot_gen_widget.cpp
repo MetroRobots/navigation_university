@@ -165,12 +165,12 @@ void RobotGenWidget::initialize(const rclcpp::Node::SharedPtr& parent_node, QWid
   connect(odom_noise_edit_, SIGNAL(valueChanged(int)), this, SLOT(changeNoiseLevel(int)));
   main_layout_->addLayout(addRow("Odometry Noise", odom_noise_edit_));*/
 
-  sensor_edit_ = new QComboBox(this);
+  /*sensor_edit_ = new QComboBox(this);
   sensor_edit_->addItem("LaserScan");
   sensor_edit_->addItem("PointCloud2");
   initializeValue(sensor_edit_, "sensor_type", "LaserScan");
   connect(sensor_edit_, SIGNAL(currentIndexChanged(int)), this, SLOT(changeNoiseLevel(int)));
-  main_layout_->addLayout(addRow("Sensor Type", sensor_edit_));
+  main_layout_->addLayout(addRow("Sensor Type", sensor_edit_));*/
 
   samples_edit_ = new QSpinBox(this);
   samples_edit_->setRange(10, 300);
@@ -371,7 +371,7 @@ std::vector<TemplateVariable> RobotGenWidget::getVariables()
   std::string sensor_offset;
   if (shape_ == 0)
   {
-    shape_macro = "circle_robot ";
+    shape_macro = "circle_robot";
     sensor_offset = std::to_string(width * sensor_offset_mult / 2);
   }
   else if (shape_ == 1)
@@ -400,7 +400,7 @@ std::vector<TemplateVariable> RobotGenWidget::getVariables()
   variables.push_back(TV("SENSOR_RANGE", sensor_range_edit_->value()));
   variables.push_back(TV("SENSOR_SAMPLES", samples_edit_->value()));
   variables.push_back(TV("SENSOR_NOISE", laser_noise_edit_->double_value()));
-  variables.push_back(TemplateVariable("SENSOR_TYPE", sensor_edit_->currentText().toStdString()));
+  // variables.push_back(TemplateVariable("SENSOR_TYPE", sensor_edit_->currentText().toStdString()));
 
   variables.push_back(TemplateVariable("PARENT_PATH", path_edit_->text().toStdString()));
   return variables;
@@ -446,9 +446,12 @@ void RobotGenWidget::generate()
   renderTemplate(templates / "description.launch.py.template", variables, package / "launch" / "description.launch.py");
   renderTemplate(templates / "display.launch.py.template", variables, package / "launch" / "display.launch.py");
   renderTemplate(templates / "gazebo.launch.py.template", variables, package / "launch" / "gazebo.launch.py");
+  renderTemplate(templates / "joy_teleop.launch.py.template", variables, package / "launch" / "joy_teleop.launch.py");
   renderTemplate(templates / "generator.launch.py.template", variables, package / "launch" / "generator.launch.py");
   renderTemplate(templates / "variables.yaml", variables, package / "config" / "variables.yaml");
   renderTemplate(templates / "kinematics.yaml", variables, package / "config" / "kinematics.yaml");
+  renderTemplate(templates / "gz_bridge.yaml", variables, package / "config" / "gz_bridge.yaml");
+  renderTemplate(templates / "joy_teleop.yaml", variables, package / "config" / "joy_teleop.yaml");
   renderTemplate(templates / "robot.urdf.xacro", variables, package / "urdf" / "robot.urdf.xacro");
 
   std::filesystem::path package2 = parent_path / config_package_name_;

@@ -1,43 +1,122 @@
-<sdf version='1.5'>
-  <model name='walls'>
-    <static>1</static>
-    <link name='symbol'>
-
-      <collision name='my_walls'>
+<sdf version='1.10'>
+  <world name='navigation_university'>
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"></plugin>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"></plugin>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"></plugin>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <plugin filename="gz-sim-imu-system" name="gz::sim::systems::Imu"></plugin>
+    <model name='ground_plane'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 1</ambient>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+            <specular>0.8 0.8 0.8 1</specular>
+          </material>
+        </visual>
         <pose>0 0 0 0 0 0</pose>
-        <geometry>
-          <mesh>
-            <uri>model://nowhere/meshes/a_map.stl</uri>
-            <scale>1 1 1</scale>
-          </mesh>
-        </geometry>
-        <max_contacts>10</max_contacts>
-        <surface>
-          <bounce/>
-          <friction>
-            <ode/>
-          </friction>
-          <contact>
-            <ode/>
-          </contact>
-        </surface>
-      </collision>
-
-      <visual name='my_walls'>
-        <pose>0 0 0 0 0 0</pose>
-        <geometry>
-          <mesh>
-            <uri>model://nowhere/meshes/a_map.stl</uri>
-            <scale>1 1 1</scale>
-          </mesh>
-        </geometry>
-        <material>
-          <script>
-            <uri>file://media/materials/scripts/gazebo.material</uri>
-            <name>Gazebo/Blue</name>
-          </script>
-        </material>
-      </visual>
-    </link>
-  </model>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>0 0 0 0 0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+    <model name='u_map'>
+      <static>true</static>
+      <link name='link'>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>meshes/a_map.stl</uri>
+              <scale>5 5 5</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.4 0.4 0.8 1</ambient>
+            <diffuse>0.4 0.4 0.8 1</diffuse>
+            <specular>0.4 0.4 0.8 1</specular>
+          </material>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>meshes/a_map.stl</uri>
+              <scale>5 5 5</scale>
+            </mesh>
+          </geometry>
+        </collision>
+        <pose>-5 20 0 0 0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>-10 -10 0 0 0 0</pose>
+      <static>false</static>
+      <self_collide>false</self_collide>
+    </model>
+    <light name='sun' type='directional'>
+      <pose>0 0 10 0 0 0</pose>
+      <cast_shadows>false</cast_shadows>
+      <intensity>1</intensity>
+      <direction>-0.5 0.10000000000000001 -0.90000000000000002</direction>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.200000003 0.200000003 0.200000003 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <linear>0.01</linear>
+        <constant>0.90000000000000002</constant>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <spot>
+        <inner_angle>0</inner_angle>
+        <outer_angle>0</outer_angle>
+        <falloff>0</falloff>
+      </spot>
+    </light>
+  </world>
 </sdf>

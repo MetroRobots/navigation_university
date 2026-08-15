@@ -1,10 +1,11 @@
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
-from launch.conditions import IfCondition
 from launch.substitutions import LaunchConfiguration
-from launch_ros.actions import Node
+from launch.substitutions import PathJoinSubstitution
+from launch.substitutions import PythonExpression
 from launch_ros.substitutions import FindPackageShare
+from ros_gz_bridge.actions import RosGzBridge
 
 
 def generate_launch_description():
@@ -13,18 +14,23 @@ def generate_launch_description():
         name='gui',
         default_value='true',
     )
+    gui_gz_arg = PythonExpression(['"-s" if "', LaunchConfiguration('gui'), '".lower() == "false" else ""'])
+
+    ros_gz_sim = FindPackageShare('ros_gz_sim')
+    university_world = FindPackageShare('university_world')
+
     world_launch = IncludeLaunchDescription(
-        [FindPackageShare('gazebo_ros'), '/launch/gzserver.launch.py'],
+        PathJoinSubstitution([ros_gz_sim, 'launch', 'gz_sim.launch.py']),
         launch_arguments={
-            'pause': 'true',
-            'verbose': 'true',
-            'world': [FindPackageShare('university_world'), '/worlds/a.world'],
+            'gz_args': [gui_gz_arg, ' -r ', university_world, '/models/nowhere/model.sdf'],
+            'on_exit_shutdown': 'true',
         }.items(),
     )
 
-    gzclient_launch = IncludeLaunchDescription(
-        [FindPackageShare('gazebo_ros'), '/launch/gzclient.launch.py'],
-        condition=IfCondition(LaunchConfiguration('gui'))
+    ros_gz_bridge_action = RosGzBridge(
+        bridge_name='gz_bridge',
+        config_file=[FindPackageShare('example_bot_description'), '/config/gz_bridge.yaml'],
+        create_own_container=str(False),
     )
 
     description_launch_py = IncludeLaunchDescription(
@@ -32,18 +38,18 @@ def generate_launch_description():
     )
 
     # push robot_description to factory and spawn robot in gazebo
-    urdf_spawner_node = Node(
-        package='gazebo_ros',
-        executable='spawn_entity.py',
-        name='urdf_spawner',
-        arguments=['-topic', '/robot_description', '-entity', '[ROBOT_NAME]', '-unpause'],
-        output='screen',
+    urdf_spawner_node = IncludeLaunchDescription(
+        PathJoinSubstitution([ros_gz_sim, 'launch', 'gz_spawn_model.launch.py']),
+        launch_arguments={
+            'topic': '/robot_description',
+            'entity_name': '[ROBOT_NAME]',
+        }.items(),
     )
 
     return LaunchDescription([
         gui_arg,
         world_launch,
-        gzclient_launch,
+        ros_gz_bridge_action,
         description_launch_py,
         urdf_spawner_node,
     ])

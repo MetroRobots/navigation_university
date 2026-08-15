@@ -2,7 +2,7 @@ repositories:
   src/metro_gazebo_plugins:
     type: git
     url: https://github.com/MetroRobots/metro_gazebo_plugins.git
-    version: workshop2023
+    version: workshop2026
   src/metro_nav:
     type: git
     url: https://github.com/MetroRobots/metro_nav.git

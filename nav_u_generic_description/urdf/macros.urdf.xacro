@@ -54,7 +54,7 @@
   <material name="Gold">
     <color rgba="0.400000 0.248690 0.020759 1"/>
   </material>
-  <xacro:macro name="sensor" params="dx dy:=0 dz parent:=base_link samples angular_range rate:=12.0 min_dist:=0.12 max_dist:=15.0 stddev:=0.01 type:=sensor_msgs/PointCloud2">
+  <xacro:macro name="sensor" params="dx dy:=0 dz parent:=base_link samples angular_range rate:=12.0 min_dist:=0.12 max_dist:=15.0 stddev:=0.01">
     <link name="sensor">
       <visual>
         <geometry>
@@ -78,17 +78,11 @@
       <origin xyz="${dx} ${dy} ${dz + 0.015}"/>
     </joint>
     <gazebo reference="sensor">
-      <sensor name="gazebo_lidar" type="ray">
+      <sensor name="gazebo_lidar" type="gpu_lidar">
         <update_rate>${rate}</update_rate>
-        <plugin name="gazebo_lidar" filename="libgazebo_ros_ray_sensor.so">
-          <ros>
-            <argument>~/out:=scan</argument>
-            <namespace/>
-          </ros>
-          <output_type>${type}</output_type>
-          <frame_name>sensor</frame_name>
-        </plugin>
-        <ray>
+        <topic>/scan</topic>
+        <gz_frame_id>sensor</gz_frame_id>
+        <lidar>
           <scan>
             <horizontal>
               <samples>${samples}</samples>
@@ -107,28 +101,20 @@
             <mean>0.0</mean>
             <stddev>${stddev}</stddev>
           </noise>
-        </ray>
+        </lidar>
       </sensor>
       <material>Gazebo/DarkGrey</material>
     </gazebo>
   </xacro:macro>
   <xacro:macro name="plugins" params="x_covar y_covar theta_covar odom_mult">
     <gazebo>
-      <plugin name="gazebo_ros_state" filename="libgazebo_ros_state.so">
-        <ros>
-          <namespace>/robot</namespace>
-          <update_rate>5.0</update_rate>
-        </ros>
-      </plugin>
-      <plugin name="planar" filename="libgazebo_base2d_plugin.so">
-        <ros>
+      <plugin name="gazebo_base2d_plugin::GazeboBase2DPlugin" filename="libgazebo_base2d_plugin.so">
           <covariance_x>${x_covar}</covariance_x>
           <covariance_y>${y_covar}</covariance_y>
           <covariance_theta>${theta_covar}</covariance_theta>
           <odom_covariance_x>${x_covar*odom_mult}</odom_covariance_x>
           <odom_covariance_y>${y_covar*odom_mult}</odom_covariance_y>
           <odom_covariance_theta>${theta_covar*odom_mult}</odom_covariance_theta>
-        </ros>
       </plugin>
     </gazebo>
   </xacro:macro>
@@ -204,11 +190,8 @@
     <xacro:wheel prefix="left_back" dx="-${length/4}" dy="${width/2}" radius="${wheel_radius}" width="${wheel_width}" color="${wheel_color}"/>
     <xacro:wheel prefix="right_back" dx="-${length/4}" dy="${width/2}" radius="${wheel_radius}" width="${wheel_width}" reflect="-1" color="${wheel_color}"/>
     <gazebo>
-      <plugin name="gazebo_ros_joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
-        <ros>
-          <namespace>/</namespace>
-        </ros>
-        <update_rate>10</update_rate>
+      <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher">
+        <topic>joint_states</topic>
         <joint_name>left_front_wheel_joint</joint_name>
         <joint_name>right_front_wheel_joint</joint_name>
         <joint_name>right_back_wheel_joint</joint_name>
@@ -252,10 +235,8 @@
     <xacro:wheel prefix="right_front" dx="${.707 * width / 4}" dy="${.707 * width/4}" radius="${wheel_radius}" width="${wheel_width}" reflect="-1" color="${wheel_color}"/>
     <xacro:wheel prefix="back" dx="${-0.5*width / 2}" dy="0.0" radius="${wheel_radius}" width="${wheel_width}" color="${wheel_color}"/>
     <gazebo>
-      <plugin name="gazebo_ros_joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
-        <ros>
-          <namespace>/</namespace>
-        </ros>
+      <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher">
+        <topic>joint_states</topic>
         <update_rate>10</update_rate>
         <joint_name>left_front_wheel_joint</joint_name>
         <joint_name>right_front_wheel_joint</joint_name>

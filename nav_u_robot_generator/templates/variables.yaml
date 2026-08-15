@@ -13,7 +13,6 @@ nav_u_robot_generator:
     sensor_range: [SENSOR_RANGE]
     sensor_samples: [SENSOR_SAMPLES]
     sensor_noise: [SENSOR_NOISE]
-    sensor_type: [SENSOR_TYPE]
     parent_path: [PARENT_PATH]
     shape: [SHAPE]
     max_vel_x: [MAX_VEL_X]

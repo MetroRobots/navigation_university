@@ -16,7 +16,7 @@ def generate_launch_description():
     ld.add_action(DeclareLaunchArgument(
         'map_yaml',
         default_value=PathJoinSubstitution(
-            [FindPackageShare('university_world'), 'maps', 'willow-2010-02-18-0.10.yaml'])))
+            [FindPackageShare('university_world'), 'maps', 'u_world.yaml'])))
 
     ld.add_action(Node(
         package='nav2_map_server',
