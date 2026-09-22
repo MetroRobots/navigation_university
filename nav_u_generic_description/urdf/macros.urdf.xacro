@@ -109,12 +109,12 @@
   <xacro:macro name="plugins" params="x_covar y_covar theta_covar odom_mult">
     <gazebo>
       <plugin name="gazebo_base2d_plugin::GazeboBase2DPlugin" filename="libgazebo_base2d_plugin.so">
-          <covariance_x>${x_covar}</covariance_x>
-          <covariance_y>${y_covar}</covariance_y>
-          <covariance_theta>${theta_covar}</covariance_theta>
-          <odom_covariance_x>${x_covar*odom_mult}</odom_covariance_x>
-          <odom_covariance_y>${y_covar*odom_mult}</odom_covariance_y>
-          <odom_covariance_theta>${theta_covar*odom_mult}</odom_covariance_theta>
+        <covariance_x>${x_covar}</covariance_x>
+        <covariance_y>${y_covar}</covariance_y>
+        <covariance_theta>${theta_covar}</covariance_theta>
+        <odom_covariance_x>${x_covar*odom_mult}</odom_covariance_x>
+        <odom_covariance_y>${y_covar*odom_mult}</odom_covariance_y>
+        <odom_covariance_theta>${theta_covar*odom_mult}</odom_covariance_theta>
       </plugin>
     </gazebo>
   </xacro:macro>
